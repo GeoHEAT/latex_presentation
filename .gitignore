@@ -1,0 +1,24 @@
+# LaTeX build artifacts (keep .pdf and sources)
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.bbl
+*.blg
+*.run.xml
+*.bcf
+*.lof
+*.lot
+*.dvi
+# editor/backup junk
+*.bak
+*.pre-restore.bak
+*~
+.DS_Store

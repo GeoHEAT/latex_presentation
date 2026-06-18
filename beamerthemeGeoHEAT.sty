@@ -1,0 +1,149 @@
+% beamerthemeGeoHEAT.sty
+% Beamer theme reproducing the GeoHEAT PowerPoint template
+% (Template_GeoHEAT_20241213.pptx)
+%
+% Compile the presentation with XeLaTeX or LuaLaTeX (needs fontspec
+% for the Carlito font, a metric-compatible Calibri clone).
+%
+% Geometry reference: the PPT is 13.333 x 7.5 in; beamer 16:9 paper is
+% 160 x 90 mm, i.e. 1 in (PPT) = 12 mm (beamer).
+
+\mode<presentation>
+
+\RequirePackage{tikz}
+\RequirePackage{fontspec}
+
+% ---------------------------------------------------------------------------
+% Fonts: Calibri in the template -> Carlito (metric-compatible clone)
+% ---------------------------------------------------------------------------
+\setsansfont{Carlito}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ---------------------------------------------------------------------------
+% Colors (from the PPTX theme)
+% ---------------------------------------------------------------------------
+\definecolor{GeoBlue}{HTML}{0063B4}   % accent1: titles, body text, bullets
+\definecolor{GeoSlate}{HTML}{44546A}  % tx1: footer / date / slide number
+\definecolor{GeoTeal}{HTML}{39C1CD}   % accent2 (available for highlights)
+\definecolor{GeoOrange}{HTML}{F58220} % accent3 (available for highlights)
+
+\setbeamercolor{normal text}{fg=GeoBlue,bg=white}
+\setbeamercolor{structure}{fg=GeoBlue}
+\setbeamercolor{frametitle}{fg=GeoBlue,bg=white}
+\setbeamercolor{title}{fg=GeoBlue}
+\setbeamercolor{subtitle}{fg=GeoBlue}
+\setbeamercolor{author}{fg=GeoBlue}
+\setbeamercolor{itemize item}{fg=GeoBlue}
+\setbeamercolor{itemize subitem}{fg=GeoBlue}
+\setbeamercolor{enumerate item}{fg=GeoBlue}
+\setbeamercolor{footline}{fg=GeoSlate}
+
+% ---------------------------------------------------------------------------
+% Font sizes (PPT pt * 90mm/7.5in = PPT pt * 0.4724)
+%   title slide title 54pt -> 25.5   subtitle 24pt -> 11.3
+%   frame title 44pt -> 20.8         body 28pt -> 13.2
+%   footer 12pt -> 5.7
+% ---------------------------------------------------------------------------
+\setbeamerfont{title}{size=\fontsize{25.5}{28}\selectfont}
+\setbeamerfont{subtitle}{size=\fontsize{11.3}{14}\selectfont}
+\setbeamerfont{frametitle}{size=\fontsize{20.8}{23}\selectfont}
+\setbeamerfont{normal text}{size=\fontsize{13.2}{15}\selectfont}
+\setbeamerfont{footline}{size=\fontsize{5.7}{6.8}\selectfont}
+\AtBeginDocument{\fontsize{13.2}{15}\selectfont}
+
+% itemize: level-2/3 sizes scaled like PowerPoint outline levels
+\setbeamerfont{itemize/enumerate body}{size=\fontsize{13.2}{15}\selectfont}
+\setbeamerfont{itemize/enumerate subbody}{size=\fontsize{11.3}{13.5}\selectfont}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\fontsize{9.5}{11.5}\selectfont}
+
+% Round bullet "•" like the template
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{itemize subsubitem}{\textbullet}
+
+% ---------------------------------------------------------------------------
+% Page geometry: PPT margins 0.92in left/right -> 11 mm
+% ---------------------------------------------------------------------------
+\setbeamersize{text margin left=11mm, text margin right=11mm}
+
+% No navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% ---------------------------------------------------------------------------
+% GeoHEAT logo on every slide (top right), as in the slide master:
+%   GeoHEAT logo : x=9.98in y=0.31in w=2.93in -> x=119.8mm y=3.7mm w=35.2mm
+% PNG (baked colours) is used so the black ring/text do not inherit the
+% slide text colour (the vector PDF rendered them blue).
+% ---------------------------------------------------------------------------
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt]
+      at ([xshift=119.8mm,yshift=-3.7mm]current page.north west)
+      {\includegraphics[width=35.2mm]{figs/geoheat_logo.png}};
+  \end{tikzpicture}%
+}
+
+% ---------------------------------------------------------------------------
+% Funding logos (EU + SERI), side by side, bottom right. Used only on the
+% title page and the closing slide -- call \geofundinglogos inside the frame.
+% Height 9.6mm = 1.2x the previous 8mm.
+% ---------------------------------------------------------------------------
+\newcommand{\geofundinglogos}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south west,inner sep=0pt]
+      at ([xshift=69mm,yshift=-84mm]current page.north west)
+      {\includegraphics[height=9.6mm]{figs/eu_funding}};
+    \node[anchor=south west,inner sep=0pt]
+      at ([xshift=117mm,yshift=-84mm]current page.north west)
+      {\includegraphics[height=9.6mm]{figs/seri_funding}};
+  \end{tikzpicture}%
+}
+
+% ---------------------------------------------------------------------------
+% Footline: date (left) | footer text (center) | slide number (right)
+% PPT: y=6.95in of 7.5in -> 6.6mm strip at the bottom, 12pt -> 5.7pt
+% ---------------------------------------------------------------------------
+\newcommand{\geofooter}{Footer}            % center footer text
+\newcommand{\setfooter}[1]{\renewcommand{\geofooter}{#1}}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.6mm,dp=4mm,
+                         leftskip=11mm,rightskip=11mm]{footline}%
+    \usebeamerfont{footline}%
+    \makebox[36mm][l]{\insertdate}%
+    \hfill\geofooter\hfill%
+    \makebox[36mm][r]{\insertframenumber}%
+  \end{beamercolorbox}%
+}
+
+% ---------------------------------------------------------------------------
+% Frame title: PPT title placeholder at (0.92in, 0.40in), bottom-anchored
+% box of 1.45in height -> text sits roughly 4.8-17mm from the top
+% ---------------------------------------------------------------------------
+\setbeamertemplate{frametitle}{%
+  \vspace*{4.8mm}%
+  \begin{minipage}[b][12.5mm][b]{103.7mm}% width = 8.64in
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    \insertframetitle
+  \end{minipage}\par
+  \vspace*{4mm}% body starts at 2.24in from top
+}
+
+% ---------------------------------------------------------------------------
+% Title page: centred blue title + subtitle, as in the title layout
+%   ctrTitle at y=2.22in (26.6mm), subTitle at y=3.94in (47.3mm)
+% ---------------------------------------------------------------------------
+\setbeamertemplate{title page}{%
+  \vspace*{14mm}%
+  \begin{center}
+    \begin{minipage}{120mm}\centering
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+      \vspace{6mm}
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertauthor\par}
+    \end{minipage}
+  \end{center}
+  \vfill
+}
+
+\mode<all>

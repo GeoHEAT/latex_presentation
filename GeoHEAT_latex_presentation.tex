@@ -1,0 +1,53 @@
+% !TeX program = xelatex
+% GeoHEAT presentation template
+% Reproduces the GeoHEAT PowerPoint template (Template GeoHEAT 20241213.pptx):
+%   white slides, blue titles, GeoHEAT + EU + SERI funding logos top-right,
+%   footer with date | center text | slide number.
+% Compile with: latexmk -xelatex <file>.tex   (needs XeLaTeX + Carlito font)
+\documentclass[aspectratio=169,t]{beamer}
+
+\usetheme{GeoHEAT}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% ---------------------------------------------------------------------------
+% Metadata -- edit these for your talk
+% ---------------------------------------------------------------------------
+\title{Presentation title}
+\author{Author Name (Affiliation)\\[2mm]
+        \footnotesize on behalf of the GeoHEAT consortium}
+\date{\today}
+\setfooter{GeoHEAT}          % centered footer text
+
+\begin{document}
+
+% --- Title slide (with EU + SERI funding logos) -----------------------------
+{\setbeamertemplate{footline}{}
+\begin{frame}
+  \titlepage
+  \geofundinglogos
+\end{frame}
+}
+
+% --- Content slide ----------------------------------------------------------
+\begin{frame}{Slide title}
+  \begin{itemize}
+    \item First point
+    \item Second point
+  \end{itemize}
+\end{frame}
+
+% --- Closing slide (with EU + SERI funding logos) ---------------------------
+{\setbeamertemplate{footline}{}
+\begin{frame}
+  \vfill
+  \begin{center}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}Thank you!}
+  \end{center}
+  \vfill
+  \geofundinglogos
+\end{frame}
+}
+
+\end{document}
